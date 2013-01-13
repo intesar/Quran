@@ -40,21 +40,16 @@ import org.hibernate.search.annotations.TokenizerDef;
 @Cache(usage = NONSTRICT_READ_WRITE)
 @Indexed
 @AnalyzerDefs({
-    @AnalyzerDef(name = "synonymss",
+    @AnalyzerDef(name = "synonyms",
     tokenizer =
     @TokenizerDef(factory = StandardTokenizerFactory.class),
     filters = {
         @TokenFilterDef(factory = StandardFilterFactory.class),
-        @TokenFilterDef(factory = StopFilterFactory.class //,
-        //    params = @Parameter(name = "words", value = "synonym_words.txt")
-        ),
+        @TokenFilterDef(factory = StopFilterFactory.class),
         @TokenFilterDef(factory = SynonymFilterFactory.class, params = {
             @Parameter(name = "ignoreCase", value = "true"),
             @Parameter(name = "expand", value = "true"),
-            @Parameter(name = "synonyms", value = "synonym_words.txt")})
-//        @TokenFilterDef(factory =SynonymFilterFactory.class,
-//            // expand all synonyms in the token stream
-//            params = @Parameter(name = "expand",value = "true"))
+            @Parameter(name = "synonyms", value = "data/synonyms.properties")})
     }),
     @AnalyzerDef(name = "snowballPorter",
     tokenizer =
@@ -81,21 +76,28 @@ public class Quran implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
+    // ayah number
     @Field
-    //@Analyzer(definition = "snowballPorter")
+    @NumericField
+    @Column(name = "ayahId")
+    private Integer ayahId;
+    // ayah
+    @Field
     @Fields({
         @Field(name = "ayahText", analyzer =
         @Analyzer(definition = "snowballPorter")),
         @Field(name = "ayahText", analyzer =
-        @Analyzer(definition = "synonymss"))
+        @Analyzer(definition = "synonyms"))
     })
     @Lob
     @Column(name = "ayahText")
     private String ayahText;
+    // sura numbber
     @Field
     @NumericField
     @Column(name = "suraId")
     private Integer suraId;
+    // verse number
     @Field
     @NumericField
     @Column(name = "verseId")
@@ -114,6 +116,14 @@ public class Quran implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Integer getAyahId() {
+        return ayahId;
+    }
+
+    public void setAyahId(Integer ayahId) {
+        this.ayahId = ayahId;
     }
 
     public String getAyahText() {
@@ -162,6 +172,8 @@ public class Quran implements Serializable {
 
     @Override
     public String toString() {
-        return "qurandbinsert1.Quran[ id=" + id + " ]";
+        return "Quran{" + "id=" + id + ", ayahId=" + ayahId + ", ayahText=" + ayahText + ", suraId=" + suraId + ", verseId=" + verseId + '}';
     }
+
+    
 }

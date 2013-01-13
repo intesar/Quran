@@ -92,17 +92,16 @@ public class QuranServiceImpl {
                  * it returns null only for the END of the stream.
                  * it returns an empty String if two newlines appear in a row.
                  */
-                int count = 1;
+                int ayahId = 1;
                 List<Quran> list = new ArrayList<>();
                 while (((line = x.readLine()) != null)) {
                     String[] tokens = line.split("\\|");
                     Quran quran = new Quran();
-                    //quran.setDatabaseID(Short.parseShort(tokens[0]));
+                    quran.setAyahId(ayahId++);
                     quran.setSuraId(Integer.parseInt(tokens[0]));
                     quran.setVerseId(Integer.parseInt(tokens[1]));
                     quran.setAyahText(tokens[2]);
                     list.add(quran);
-                    count++;
                 }
                 return list;
             } finally {

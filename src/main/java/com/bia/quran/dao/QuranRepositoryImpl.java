@@ -47,7 +47,7 @@ public class QuranRepositoryImpl implements QuranRespositorySearch {
                 fullTextEntityManager.createFullTextQuery(luceneQuery);
 
         org.apache.lucene.search.Sort sort = new Sort(
-                new SortField(QuranConstants.SURA_ID, SortField.INT));
+                new SortField(QuranConstants.AYAH_ID, SortField.INT));
         
         fullTextQuery.setSort(sort);
 
