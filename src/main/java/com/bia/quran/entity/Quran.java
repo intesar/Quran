@@ -14,12 +14,17 @@ import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 import org.apache.solr.analysis.LowerCaseFilterFactory;
 import org.apache.solr.analysis.SnowballPorterFilterFactory;
+import org.apache.solr.analysis.StandardFilterFactory;
 import org.apache.solr.analysis.StandardTokenizerFactory;
+import org.apache.solr.analysis.StopFilterFactory;
+import org.apache.solr.analysis.SynonymFilterFactory;
 import org.hibernate.annotations.Cache;
 import static org.hibernate.annotations.CacheConcurrencyStrategy.NONSTRICT_READ_WRITE;
 import org.hibernate.search.annotations.Analyzer;
 import org.hibernate.search.annotations.AnalyzerDef;
+import org.hibernate.search.annotations.AnalyzerDefs;
 import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Fields;
 import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.NumericField;
 import org.hibernate.search.annotations.Parameter;
@@ -34,14 +39,33 @@ import org.hibernate.search.annotations.TokenizerDef;
 @Table(name = "Quran")
 @Cache(usage = NONSTRICT_READ_WRITE)
 @Indexed
-@AnalyzerDef(name = "customanalyzer",
-  tokenizer = @TokenizerDef(factory = StandardTokenizerFactory.class),
-  filters = {
-    @TokenFilterDef(factory = LowerCaseFilterFactory.class),
-    @TokenFilterDef(factory = SnowballPorterFilterFactory.class, params = {
-      @Parameter(name = "language", value = "English")
+@AnalyzerDefs({
+    @AnalyzerDef(name = "synonymss",
+    tokenizer =
+    @TokenizerDef(factory = StandardTokenizerFactory.class),
+    filters = {
+        @TokenFilterDef(factory = StandardFilterFactory.class),
+        @TokenFilterDef(factory = StopFilterFactory.class //,
+        //    params = @Parameter(name = "words", value = "synonym_words.txt")
+        ),
+        @TokenFilterDef(factory = SynonymFilterFactory.class, params = {
+            @Parameter(name = "ignoreCase", value = "true"),
+            @Parameter(name = "expand", value = "true"),
+            @Parameter(name = "synonyms", value = "synonym_words.txt")})
+//        @TokenFilterDef(factory =SynonymFilterFactory.class,
+//            // expand all synonyms in the token stream
+//            params = @Parameter(name = "expand",value = "true"))
+    }),
+    @AnalyzerDef(name = "snowballPorter",
+    tokenizer =
+    @TokenizerDef(factory = StandardTokenizerFactory.class),
+    filters = {
+        @TokenFilterDef(factory = LowerCaseFilterFactory.class),
+        @TokenFilterDef(factory = SnowballPorterFilterFactory.class, params = {
+            @Parameter(name = "language", value = "English")
+        })
     })
-  })
+})
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Quran.findAll", query = "SELECT q FROM Quran q"),
@@ -50,24 +74,28 @@ import org.hibernate.search.annotations.TokenizerDef;
     @NamedQuery(name = "Quran.findByVerseId", query = "SELECT q FROM Quran q WHERE q.verseId = :verseId")
 })
 public class Quran implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    
     @Field
-    @Analyzer(definition = "customanalyzer")
+    //@Analyzer(definition = "snowballPorter")
+    @Fields({
+        @Field(name = "ayahText", analyzer =
+        @Analyzer(definition = "snowballPorter")),
+        @Field(name = "ayahText", analyzer =
+        @Analyzer(definition = "synonymss"))
+    })
     @Lob
     @Column(name = "ayahText")
     private String ayahText;
-    
     @Field
     @NumericField
     @Column(name = "suraId")
     private Integer suraId;
-    
     @Field
     @NumericField
     @Column(name = "verseId")
@@ -136,5 +164,4 @@ public class Quran implements Serializable {
     public String toString() {
         return "qurandbinsert1.Quran[ id=" + id + " ]";
     }
-    
 }
