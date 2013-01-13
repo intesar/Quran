@@ -13,5 +13,7 @@ public interface QuranRepository extends PagingAndSortingRepository<Quran, Integ
   public List<Quran> findByAyahText(@Param("ayahText") String ayahText);
 
   public List<Quran> findBySuraId(@Param("suraId") Integer suraId);
+  
+  public List<Quran> findBySuraIdBetween(Integer from, Integer to);
 
 }

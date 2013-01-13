@@ -23,6 +23,10 @@ public class QuranServiceImpl {
 
     protected static final Logger logger = Logger.getLogger(QuranServiceImpl.class);
     protected static final String RAW_DATA_FILE = "/data/English-Yusuf-Ali-59 (2).csv";
+    protected static final String SURA_NO_REGEX = "([1-9]|[1-9][0-9]|1[0-1][0-4])";
+    protected static final String SURA_PREFIX_NO_REGEX = "suraId:" + SURA_NO_REGEX;
+    protected static final String SURA_NO_REGEX_BETWEEN = SURA_NO_REGEX + "-" + SURA_NO_REGEX;
+    protected static final String SURA_PREFIX_NO_REGEX_BETWEEN = SURA_PREFIX_NO_REGEX + "-" + SURA_PREFIX_NO_REGEX;
     
     @Autowired
     protected QuranRepository quranRepository;
@@ -36,9 +40,30 @@ public class QuranServiceImpl {
         logger.info("saving reinit data to db");
         quranRepository.save(list);
     }
-
-    public List<Quran> getSuraById(Integer suraId) {
-        return this.quranRepository.findBySuraId(suraId);
+    
+    /*
+     * Searches entire db for the term
+     * Search by sura number (e.g 1, 23, 114, suraID:1, suraID:34. valid suraID values 1-114)
+     * Search by sura number range (e.g 1-4, 100-114)
+     * Search by Sura name   
+     * Search by term
+     */
+    public List<Quran> search(String term) {
+        logger.info("Search term: " + term);
+        if (term.matches(SURA_NO_REGEX) || term.matches(SURA_PREFIX_NO_REGEX)) {
+            String suraNo = term;
+            String[] tokens = term.split(":");
+            if (tokens.length > 1 ) {
+                suraNo = tokens[1];
+            }
+            Integer suraId = Integer.parseInt(suraNo);
+            logger.info("suraId : " + suraId);
+            return quranRepository.findBySuraId(suraId);
+        } else if ( term.matches(SURA_NO_REGEX_BETWEEN)) {
+            String[] fromTo = term.split("-");
+            return quranRepository.findBySuraIdBetween(Integer.parseInt(fromTo[0]), Integer.parseInt(fromTo[1]));
+        }
+        return null;
     }
     
     /**
