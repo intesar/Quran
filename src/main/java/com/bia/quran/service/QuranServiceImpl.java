@@ -15,7 +15,6 @@ import org.springframework.stereotype.Component;
 /**
  * Reads Quran data from csv
  *
- * @author
  * @author Intesar Mohammed <mdshannan@gmail.com>
  */
 @Component
@@ -62,8 +61,10 @@ public class QuranServiceImpl {
         } else if ( term.matches(SURA_NO_REGEX_BETWEEN)) {
             String[] fromTo = term.split("-");
             return quranRepository.findBySuraIdBetween(Integer.parseInt(fromTo[0]), Integer.parseInt(fromTo[1]));
+        } else {
+            return quranRepository.search(term);
         }
-        return null;
+        //return null;
     }
     
     /**
