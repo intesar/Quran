@@ -139,7 +139,7 @@
             <version>1.0.0.RC2</version>
         </dependency> 
         
-         <!-- ~~~~~~~~~~~~~~~ -->
+        <!-- ~~~~~~~~~~~~~~~ -->
         <!-- SPRING SECURITY -->
         <!-- ~~~~~~~~~~~~~~~ -->
         <dependency>
@@ -244,6 +244,49 @@
                 </exclusion>
             </exclusions>
         </dependency>
+        
+        <!-- Jersey JAX-RS -->
+        <dependency>
+            <groupId>com.sun.jersey</groupId>
+            <artifactId>jersey-server</artifactId>
+            <version>1.8</version>
+        </dependency>
+        <dependency> 
+            <groupId>com.sun.jersey</groupId> 
+            <artifactId>jersey-json</artifactId> 
+            <version>1.8</version> 
+        </dependency> 
+        <dependency>
+            <groupId>com.sun.jersey.contribs</groupId>
+            <artifactId>jersey-spring</artifactId>
+            <version>1.8</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-core</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-web</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-beans</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-context</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-aop</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
     </dependencies>
 
     <repositories>
@@ -251,6 +294,12 @@
             <id>spring-milestone</id>
             <name>Spring Maven MILESTONE Repository</name>
             <url>http://repo.springsource.org/libs-milestone</url>
+        </repository>
+        <repository>
+            <id>snapshot-repository.java.net</id>
+            <name>Java.net Snapshot Repository for Maven</name>
+            <url>https://maven.java.net/content/repositories/snapshots/</url>
+            <layout>default</layout>
         </repository>
     </repositories>
   

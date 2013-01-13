@@ -23,26 +23,26 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Quran.findAll", query = "SELECT q FROM Quran q"),
     @NamedQuery(name = "Quran.findById", query = "SELECT q FROM Quran q WHERE q.id = :id"),
-    @NamedQuery(name = "Quran.findByDatabaseID", query = "SELECT q FROM Quran q WHERE q.databaseID = :databaseID"),
-    @NamedQuery(name = "Quran.findBySuraID", query = "SELECT q FROM Quran q WHERE q.suraID = :suraID ORDER BY verseID"),
-    @NamedQuery(name = "Quran.findByVerseID", query = "SELECT q FROM Quran q WHERE q.verseID = :verseID")
+    @NamedQuery(name = "Quran.findByDatabaseId", query = "SELECT q FROM Quran q WHERE q.databaseId = :databaseId"),
+    @NamedQuery(name = "Quran.findBySuraId", query = "SELECT q FROM Quran q WHERE q.suraId = :suraId ORDER BY verseId"),
+    @NamedQuery(name = "Quran.findByVerseId", query = "SELECT q FROM Quran q WHERE q.verseId = :verseId")
 })
 public class Quran implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "ID")
+    @Column(name = "id")
     private Integer id;
     @Lob
-    @Column(name = "AyahText")
+    @Column(name = "ayahText")
     private String ayahText;
-    @Column(name = "DatabaseID")
-    private Short databaseID;
-    @Column(name = "SuraID")
-    private Integer suraID;
-    @Column(name = "VerseID")
-    private Integer verseID;
+    @Column(name = "databaseId")
+    private Short databaseId;
+    @Column(name = "suraId")
+    private Integer suraId;
+    @Column(name = "verseId")
+    private Integer verseId;
 
     public Quran() {
     }
@@ -67,28 +67,28 @@ public class Quran implements Serializable {
         this.ayahText = ayahText;
     }
 
-    public Short getDatabaseID() {
-        return databaseID;
+    public Short getDatabaseId() {
+        return databaseId;
     }
 
-    public void setDatabaseID(Short databaseID) {
-        this.databaseID = databaseID;
+    public void setDatabaseId(Short databaseId) {
+        this.databaseId = databaseId;
     }
 
-    public Integer getSuraID() {
-        return suraID;
+    public Integer getSuraId() {
+        return suraId;
     }
 
-    public void setSuraID(Integer suraID) {
-        this.suraID = suraID;
+    public void setSuraId(Integer suraId) {
+        this.suraId = suraId;
     }
 
-    public Integer getVerseID() {
-        return verseID;
+    public Integer getVerseId() {
+        return verseId;
     }
 
-    public void setVerseID(Integer verseID) {
-        this.verseID = verseID;
+    public void setVerseId(Integer verseId) {
+        this.verseId = verseId;
     }
 
     @Override

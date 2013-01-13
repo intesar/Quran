@@ -3,12 +3,17 @@
        xmlns:p="http://www.springframework.org/schema/p"
        xmlns:jpa="http://www.springframework.org/schema/data/jpa"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-       http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
+       http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
+        http://www.springframework.org/schema/context         
+  http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
   <import resource="shared.xml"/>
 
-  <jpa:repositories base-package="com.bia.quran.rest"/>
+  <context:component-scan base-package="com.bia.quran" />
+ 
+  <jpa:repositories base-package="com.bia.quran.dao" />
 
   <!--
     This validator will be picked up automatically. The default configuration is to look at the bean name
@@ -49,14 +54,14 @@
     To configure the URL parameters used for paging (as well as the default page size),
     define an instance of the RepositoryRestConfiguration class.
 
-    You can also configure the JSONP and JSONPE parameter names here.
-   -->
-  <!--
-  <bean class="org.springframework.data.rest.webmvc.RepositoryRestConfiguration"
-        p:defaultPageSize="10"
-        p:limitParamName="count"
-        p:jsonpParamName="callback"
-        p:jsonpOnErrParamName="errback"/>
-   -->
+     You can also configure the JSONP and JSONPE parameter names here.
+    -->
+    <!--
+   <bean class="org.springframework.data.rest.webmvc.RepositoryRestConfiguration"
+         p:defaultPageSize="10"
+         p:limitParamName="count"
+         p:jsonpParamName="callback"
+         p:jsonpOnErrParamName="errback"/>
+    -->
 
 </beans>
