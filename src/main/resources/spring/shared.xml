@@ -40,10 +40,7 @@
         <property name="targetName" value="_dataSource" />
     </bean>
     -->
-    <!-- jmx -->
-    <context:mbean-server />
-    <context:mbean-export registration="ignoreExisting" default-domain="zytoon" />
-
+    
     <!-- jpa -->
     <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor">
         <description>Enable exception translation for beans annotated with @Repository</description>

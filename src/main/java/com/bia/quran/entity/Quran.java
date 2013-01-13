@@ -12,6 +12,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+import org.hibernate.annotations.Cache;
+import static org.hibernate.annotations.CacheConcurrencyStrategy.NONSTRICT_READ_WRITE;
 
 /**
  *
@@ -19,12 +21,12 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Entity
 @Table(name = "Quran")
+@Cache(usage = NONSTRICT_READ_WRITE)
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Quran.findAll", query = "SELECT q FROM Quran q"),
     @NamedQuery(name = "Quran.findById", query = "SELECT q FROM Quran q WHERE q.id = :id"),
-    @NamedQuery(name = "Quran.findByDatabaseId", query = "SELECT q FROM Quran q WHERE q.databaseId = :databaseId"),
-    @NamedQuery(name = "Quran.findBySuraId", query = "SELECT q FROM Quran q WHERE q.suraId = :suraId ORDER BY verseId"),
+    @NamedQuery(name = "Quran.findBySuraId", query = "SELECT q FROM Quran q WHERE q.suraId = :suraId ORDER BY q.verseId"),
     @NamedQuery(name = "Quran.findByVerseId", query = "SELECT q FROM Quran q WHERE q.verseId = :verseId")
 })
 public class Quran implements Serializable {
@@ -37,8 +39,6 @@ public class Quran implements Serializable {
     @Lob
     @Column(name = "ayahText")
     private String ayahText;
-    @Column(name = "databaseId")
-    private Short databaseId;
     @Column(name = "suraId")
     private Integer suraId;
     @Column(name = "verseId")
@@ -65,14 +65,6 @@ public class Quran implements Serializable {
 
     public void setAyahText(String ayahText) {
         this.ayahText = ayahText;
-    }
-
-    public Short getDatabaseId() {
-        return databaseId;
-    }
-
-    public void setDatabaseId(Short databaseId) {
-        this.databaseId = databaseId;
     }
 
     public Integer getSuraId() {

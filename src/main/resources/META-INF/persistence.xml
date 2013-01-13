@@ -2,6 +2,7 @@
 <persistence xmlns="http://java.sun.com/xml/ns/persistence" version="2.0">
   <persistence-unit name="quran-pu">
     <class>com.bia.quran.entity.Quran</class>
+    <shared-cache-mode>ENABLE_SELECTIVE</shared-cache-mode>
     <!--
     <properties>
       <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLInnoDBDialect"/>
