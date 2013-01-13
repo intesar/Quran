@@ -14,6 +14,9 @@ import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 import org.hibernate.annotations.Cache;
 import static org.hibernate.annotations.CacheConcurrencyStrategy.NONSTRICT_READ_WRITE;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.NumericField;
 
 /**
  *
@@ -22,6 +25,7 @@ import static org.hibernate.annotations.CacheConcurrencyStrategy.NONSTRICT_READ_
 @Entity
 @Table(name = "Quran")
 @Cache(usage = NONSTRICT_READ_WRITE)
+@Indexed
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Quran.findAll", query = "SELECT q FROM Quran q"),
@@ -36,11 +40,19 @@ public class Quran implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
+    
+    @Field
     @Lob
     @Column(name = "ayahText")
     private String ayahText;
+    
+    @Field
+    @NumericField
     @Column(name = "suraId")
     private Integer suraId;
+    
+    @Field
+    @NumericField
     @Column(name = "verseId")
     private Integer verseId;
 

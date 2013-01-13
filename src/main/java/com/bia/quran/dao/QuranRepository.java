@@ -8,7 +8,7 @@ import org.springframework.data.repository.query.Param;
 /**
  * @author Intesar Mohammed <mdshannan@gmail.com>
  */
-public interface QuranRepository extends PagingAndSortingRepository<Quran, Integer> {
+public interface QuranRepository extends PagingAndSortingRepository<Quran, Integer>, QuranRespositorySearch {
 
   public List<Quran> findByAyahText(@Param("ayahText") String ayahText);
 
