@@ -2,6 +2,7 @@ package com.bia.quran.service;
 
 import com.bia.quran.dao.QuranRepository;
 import com.bia.quran.entity.Quran;
+import com.bia.quran.entity.ResultDto;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -47,8 +48,10 @@ public class QuranServiceImpl {
      * Search by Sura name   
      * Search by term
      */
-    public List<Quran> search(String term) {
+    public ResultDto search(String term) {
         logger.info("Search term: " + term);
+        List<Quran> list;
+        ResultDto dto = new ResultDto();
         if (term.matches(SURA_NO_REGEX) || term.matches(SURA_PREFIX_NO_REGEX)) {
             String suraNo = term;
             String[] tokens = term.split(":");
@@ -57,14 +60,16 @@ public class QuranServiceImpl {
             }
             Integer suraId = Integer.parseInt(suraNo);
             logger.info("suraId : " + suraId);
-            return quranRepository.findBySuraId(suraId);
+            list = quranRepository.findBySuraId(suraId);
         } else if ( term.matches(SURA_NO_REGEX_BETWEEN)) {
             String[] fromTo = term.split("-");
-            return quranRepository.findBySuraIdBetween(Integer.parseInt(fromTo[0]), Integer.parseInt(fromTo[1]));
+            list = quranRepository.findBySuraIdBetween(Integer.parseInt(fromTo[0]), Integer.parseInt(fromTo[1]));
         } else {
-            return quranRepository.search(term);
+            list = quranRepository.search(term);
         }
-        //return null;
+        dto.setAyahs(list);
+        dto.setAyahHits(list == null ? 0 : list.size());
+        return dto;
     }
     
     /**

@@ -1,8 +1,7 @@
 package com.bia.quran.rest;
 
-import com.bia.quran.entity.Quran;
+import com.bia.quran.entity.ResultDto;
 import com.bia.quran.service.QuranServiceImpl;
-import java.util.List;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -33,7 +32,7 @@ public class QuranRest {
     @GET
     @Path("/search/{term}")
     @Produces({MediaType.APPLICATION_JSON})
-    public List<Quran> search(@PathParam("term") String term) {
+    public ResultDto search(@PathParam("term") String term) {
         return this.quranServiceImpl.search(term);
     }
     
