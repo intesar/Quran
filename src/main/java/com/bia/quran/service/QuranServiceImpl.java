@@ -23,7 +23,7 @@ public class QuranServiceImpl {
 
     protected static final Logger logger = Logger.getLogger(QuranServiceImpl.class);
     protected static final String RAW_DATA_FILE = "/data/English-Yusuf-Ali-59 (2).csv";
-    protected static final String SURA_NO_REGEX = "([1-9]|[1-9][0-9]|1[0-1][0-4])";
+    protected static final String SURA_NO_REGEX = "([1-9]|[1-9][0-9]|10[0-9]|11[0-4])";
     protected static final String SURA_PREFIX_NO_REGEX = "suraId:" + SURA_NO_REGEX;
     protected static final String SURA_NO_REGEX_BETWEEN = SURA_NO_REGEX + "-" + SURA_NO_REGEX;
     protected static final String SURA_PREFIX_NO_REGEX_BETWEEN = SURA_PREFIX_NO_REGEX + "-" + SURA_PREFIX_NO_REGEX;
