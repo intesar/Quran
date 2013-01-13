@@ -46,6 +46,7 @@ import org.hibernate.search.annotations.TokenizerDef;
     filters = {
         @TokenFilterDef(factory = StandardFilterFactory.class),
         @TokenFilterDef(factory = StopFilterFactory.class),
+        @TokenFilterDef(factory = LowerCaseFilterFactory.class),
         @TokenFilterDef(factory = SynonymFilterFactory.class, params = {
             @Parameter(name = "ignoreCase", value = "true"),
             @Parameter(name = "expand", value = "true"),
