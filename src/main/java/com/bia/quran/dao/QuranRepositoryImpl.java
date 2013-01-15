@@ -6,12 +6,13 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceUnit;
-import org.apache.log4j.Logger;
 import org.apache.lucene.search.Sort;
 import org.apache.lucene.search.SortField;
 import org.hibernate.search.jpa.FullTextEntityManager;
 import org.hibernate.search.jpa.FullTextQuery;
 import org.hibernate.search.query.dsl.QueryBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -19,7 +20,7 @@ import org.hibernate.search.query.dsl.QueryBuilder;
  */
 public class QuranRepositoryImpl implements QuranRespositorySearch {
 
-    protected static final Logger logger = Logger.getLogger(QuranRepositoryImpl.class);
+    protected static final Logger logger = LoggerFactory.getLogger(QuranRepositoryImpl.class);
     @PersistenceUnit(unitName = "quran-pu")
     private EntityManagerFactory emf;
 
