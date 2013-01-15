@@ -93,7 +93,7 @@ public class QuranServiceImpl {
                  * it returns an empty String if two newlines appear in a row.
                  */
                 int ayahId = 1;
-                List<Quran> list = new ArrayList<>();
+                List<Quran> list = new ArrayList<Quran>();
                 while (((line = x.readLine()) != null)) {
                     String[] tokens = line.split("\\|");
                     Quran quran = new Quran();
