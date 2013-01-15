@@ -17,6 +17,7 @@
                         url: _url + $("#search-box").val()
                     }).done(function( msg ) {
                         $("#references").html(msg.ayahHits);
+                        $("#result").html('');
                         var html = '';
                         jQuery.each(msg.ayahs, function() {
                             html += "<div>" 
