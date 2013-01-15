@@ -1,0 +1,59 @@
+<configuration>
+
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <Pattern>%d{MMM dd yyyy HH:mm:ss.SSS} %-5p [%thread] [%X{username}] %c - %msg%n</Pattern>
+        </encoder>  
+    </appender>  
+
+    <!-- enable in production
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">  
+        <Prudent>false</Prudent>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>quran%d{yyyy-MM-dd}.log</FileNamePattern>  
+            <MaxHistory>30</MaxHistory> 
+        </rollingPolicy>  
+
+        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <MaxFileSize>100MB</MaxFileSize>
+        </triggeringPolicy> 
+        
+        <encoder>
+            <Pattern>%d{MMM dd yyyy HH:mm:ss.SSS} %-5p [%thread] [%X{username}] %c - %msg%n</Pattern>
+        </encoder>  
+    </appender>
+    -->
+         
+    <logger name="com.bia.quran" additivity="false">
+        <level value="DEBUG" />
+        <appender-ref ref="CONSOLE" />
+        <!-- <appender-ref ref="FILE" />  -->
+    </logger>
+
+    <logger name="org.springframework" additivity="false">
+        <level value="INFO" />
+        <appender-ref ref="CONSOLE" />
+    </logger>
+    
+    <!-- HIBERNATE & CACHE SPECIFIC -->
+    <logger name="org.hibernate.cache.EhCacheProvider" additivity="false">
+        <level value="error" />
+    </logger>
+
+    <logger name="org.hibernate">
+        <level value="warn" />
+    </logger>
+
+    <!-- Log Hibernate SQL queries to file (log level must be DEBUG to enable it) -->
+    <logger name="org.hibernate.SQL" additivity="false">
+        <level value="debug" />
+        <appender-ref ref="CONSOLE" />
+    </logger>
+    
+    <root>
+        <level value="WARN" />
+        <appender-ref ref="CONSOLE" />
+        <!-- <appender-ref ref="FILE" />  -->
+    </root> 
+    
+</configuration>
