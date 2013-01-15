@@ -35,10 +35,12 @@ public class QuranServiceImpl {
      * reinitializes db
      */
     public void reinitDB() {
+        logger.info("reniting quran data...");
         List<Quran> list = readData();
         quranRepository.deleteAll();
-        logger.info("saving reinit data to db");
+        logger.info("saving reinit data to database");
         quranRepository.save(list);
+        logger.info("reiniting done...");
     }
 
     /*

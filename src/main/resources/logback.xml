@@ -31,7 +31,7 @@
     </logger>
 
     <logger name="org.springframework" additivity="false">
-        <level value="INFO" />
+        <level value="warn" />
         <appender-ref ref="CONSOLE" />
     </logger>
     
@@ -46,7 +46,7 @@
 
     <!-- Log Hibernate SQL queries to file (log level must be DEBUG to enable it) -->
     <logger name="org.hibernate.SQL" additivity="false">
-        <level value="debug" />
+        <level value="warn" />
         <appender-ref ref="CONSOLE" />
     </logger>
     
