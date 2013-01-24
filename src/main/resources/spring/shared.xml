@@ -52,7 +52,7 @@
     <bean id="hibernateJpaVendorAdapter" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
         <description>Allow spring to configure hibernate specific settings</description>
         <property name="databasePlatform" value="org.hibernate.dialect.MySQL5InnoDBDialect" />
-        <property name="showSql" value="true" />
+        <property name="showSql" value="false" />
         <property name="generateDdl" value="true" />  
     </bean>
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean" 

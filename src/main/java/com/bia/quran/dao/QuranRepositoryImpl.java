@@ -26,9 +26,7 @@ public class QuranRepositoryImpl implements QuranRespositorySearch {
 
     @Override
     public List<Quran> search(String term) {
-        logger.info("Searching for : " + term);
-        logger.info("entityManager is : " + emf);
-
+        
         EntityManager em = emf.createEntityManager();
 
         FullTextEntityManager fullTextEntityManager =
@@ -47,10 +45,10 @@ public class QuranRepositoryImpl implements QuranRespositorySearch {
         FullTextQuery fullTextQuery =
                 fullTextEntityManager.createFullTextQuery(luceneQuery);
 
-        org.apache.lucene.search.Sort sort = new Sort(
-                new SortField(QuranConstants.AYAH_ID, SortField.INT));
+//        org.apache.lucene.search.Sort sort = new Sort(
+//                new SortField(QuranConstants.AYAH_ID, SortField.INT));
         
-        fullTextQuery.setSort(sort);
+//        fullTextQuery.setSort(sort);
 
         List<Quran> result = fullTextQuery.getResultList();
 

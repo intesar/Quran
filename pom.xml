@@ -51,10 +51,10 @@
         <!-- Log level, see by src/main/resource/log4j.properties -->
         <log4j.level>DEBUG</log4j.level>
         <!-- hibernate, see by src/main/resource/hibernate.properties -->
-        <hibernate.show.sql>true</hibernate.show.sql>
-        <hibernate.format.sql>true</hibernate.format.sql>
-        <hibernate.generate_statistics>true</hibernate.generate_statistics>
-        <hibernate.use_sql_comments>true</hibernate.use_sql_comments>
+        <hibernate.show.sql>false</hibernate.show.sql>
+        <hibernate.format.sql>false</hibernate.format.sql>
+        <hibernate.generate_statistics>false</hibernate.generate_statistics>
+        <hibernate.use_sql_comments>false</hibernate.use_sql_comments>
         <hibernate.ehcache.configuration.file>ehcache.xml</hibernate.ehcache.configuration.file>
         <hibernate.use.second.level.cache>true</hibernate.use.second.level.cache>
         <hibernate.use.query.cache>true</hibernate.use.query.cache>
@@ -309,6 +309,34 @@
                 </exclusion>
             </exclusions>
         </dependency>
+        
+        <!-- javamelody-core -->
+        <dependency>
+            <groupId>net.bull.javamelody</groupId>
+            <artifactId>javamelody-core</artifactId>
+            <version>1.41.0</version>
+        </dependency>
+        <!-- itext, option to add PDF export -->
+        <dependency>
+            <groupId>com.lowagie</groupId>
+            <artifactId>itext</artifactId>
+            <version>2.1.7</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>bcmail-jdk14</artifactId>
+                    <groupId>bouncycastle</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>bcprov-jdk14</artifactId>
+                    <groupId>bouncycastle</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>bctsp-jdk14</artifactId>
+                    <groupId>bouncycastle</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>

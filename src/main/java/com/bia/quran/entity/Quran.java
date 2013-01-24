@@ -24,7 +24,6 @@ import org.hibernate.search.annotations.Analyzer;
 import org.hibernate.search.annotations.AnalyzerDef;
 import org.hibernate.search.annotations.AnalyzerDefs;
 import org.hibernate.search.annotations.Field;
-import org.hibernate.search.annotations.Fields;
 import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.NumericField;
 import org.hibernate.search.annotations.Parameter;
@@ -40,7 +39,7 @@ import org.hibernate.search.annotations.TokenizerDef;
 @Cache(usage = NONSTRICT_READ_WRITE)
 @Indexed
 @AnalyzerDefs({
-    @AnalyzerDef(name = "synonyms",
+    @AnalyzerDef(name = "custom-analyzer",
     tokenizer =
     @TokenizerDef(factory = StandardTokenizerFactory.class),
     filters = {
@@ -50,13 +49,7 @@ import org.hibernate.search.annotations.TokenizerDef;
         @TokenFilterDef(factory = SynonymFilterFactory.class, params = {
             @Parameter(name = "ignoreCase", value = "true"),
             @Parameter(name = "expand", value = "true"),
-            @Parameter(name = "synonyms", value = "data/synonyms.properties")})
-    }),
-    @AnalyzerDef(name = "snowballPorter",
-    tokenizer =
-    @TokenizerDef(factory = StandardTokenizerFactory.class),
-    filters = {
-        @TokenFilterDef(factory = LowerCaseFilterFactory.class),
+            @Parameter(name = "synonyms", value = "data/synonyms.properties")}),
         @TokenFilterDef(factory = SnowballPorterFilterFactory.class, params = {
             @Parameter(name = "language", value = "English")
         })
@@ -84,12 +77,7 @@ public class Quran implements Serializable {
     private Integer ayahId;
     // ayah
     @Field
-    @Fields({
-        @Field(name = "ayahText", analyzer =
-        @Analyzer(definition = "snowballPorter")),
-        @Field(name = "ayahText", analyzer =
-        @Analyzer(definition = "synonyms"))
-    })
+    @Analyzer(definition = "custom-analyzer")
     @Lob
     @Column(name = "ayahText")
     private String ayahText;
@@ -175,6 +163,4 @@ public class Quran implements Serializable {
     public String toString() {
         return "Quran{" + "id=" + id + ", ayahId=" + ayahId + ", ayahText=" + ayahText + ", suraId=" + suraId + ", verseId=" + verseId + '}';
     }
-
-    
 }

@@ -1,0 +1,51 @@
+<!DOCTYPE html> 
+<html> 
+    <head> 
+        <title>Page Title</title> 
+
+        <meta name="viewport" content="width=device-width, initial-scale=1"> 
+
+        <link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.css" />
+        <script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
+        <script src="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.js"></script>
+        <script type="text/javascript">
+            var _url = "/quran/rest/quranservice/search/";
+            $(document).ready(function () {
+                $("#search-box").on( "change", function(event, ui) {
+                    $.ajax({
+                        type: "GET",
+                        url: _url + $("#search-box").val()
+                    }).done(function( msg ) {
+                        $("#references").html(msg.ayahHits);
+                        $("#result").html('');
+                        var html = '';
+                        jQuery.each(msg.ayahs, function() {
+                            html += "<div>" 
+                                + " <p>" + this['ayahText'] +"</p>"
+                                + " <span>" + this['suraId'] + "</span><span> verse: " + this['verseId'] +"</span> "
+                                + " </div>";
+                        });
+                        $("#result").html(html);
+                    });
+                });
+            });
+        </script>
+    </head> 
+
+    <body> 
+        <div data-role="page">
+            <div data-role="content">	
+                <div data-role="fieldcontain" style="padding-left:10%; width: 50%">
+                    <h3>Search Quran in total different ways!</h3>
+                    <br/>
+                    <input type="search" name="search-mini" id="search-box" value="" data-mini="true" />	
+                </div>
+            </div>
+            <div style="padding-left: 5%; padding-right: 5%">
+                <div><h3>References : <span id="references"></span></h3></div>
+                <div id="result"></div>
+            </div>
+        </div>
+
+    </body>
+</html>
