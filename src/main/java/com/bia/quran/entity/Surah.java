@@ -7,11 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 import org.apache.solr.analysis.LowerCaseFilterFactory;
@@ -27,7 +23,6 @@ import org.hibernate.search.annotations.AnalyzerDef;
 import org.hibernate.search.annotations.AnalyzerDefs;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
-import org.hibernate.search.annotations.NumericField;
 import org.hibernate.search.annotations.Parameter;
 import org.hibernate.search.annotations.TokenFilterDef;
 import org.hibernate.search.annotations.TokenizerDef;
@@ -37,14 +32,14 @@ import org.hibernate.search.annotations.TokenizerDef;
  * @author Intesar Mohammed <mdshannan@gmail.com>
  */
 @Entity
-@Table(name = "Quran")
+@Table(name = "surah")
 @Cache(usage = NONSTRICT_READ_WRITE)
 @Indexed
 @AnalyzerDefs({
     @AnalyzerDef(name = "custom-analyzer",
-    tokenizer =
-    @TokenizerDef(factory = StandardTokenizerFactory.class),
-    filters = {
+            tokenizer =
+            @TokenizerDef(factory = StandardTokenizerFactory.class),
+            filters = {
         @TokenFilterDef(factory = StandardFilterFactory.class),
         @TokenFilterDef(factory = StopFilterFactory.class),
         @TokenFilterDef(factory = LowerCaseFilterFactory.class),
@@ -58,13 +53,7 @@ import org.hibernate.search.annotations.TokenizerDef;
     })
 })
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Quran.findAll", query = "SELECT q FROM Quran q"),
-    @NamedQuery(name = "Quran.findById", query = "SELECT q FROM Quran q WHERE q.id = :id"),
-    @NamedQuery(name = "Quran.findBySuraId", query = "SELECT q FROM Quran q WHERE q.suraId = :suraId ORDER BY q.verseId"),
-    @NamedQuery(name = "Quran.findByVerseId", query = "SELECT q FROM Quran q WHERE q.verseId = :verseId")
-})
-public class Quran implements Serializable {
+public class Surah implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -72,33 +61,17 @@ public class Quran implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    // ayah number
-    @Field
-    @NumericField
-    @Column(name = "ayahId")
-    private Integer ayahId;
-    // ayah
+    // name
     @Field
     @Analyzer(definition = "custom-analyzer")
     @Lob
-    @Column(name = "ayahText")
-    private String ayahText;
-    // sura numbber
-    @Field
-    @Column(name = "suraId")
-    @ManyToOne
-    @JoinColumn(name="id", nullable=false)
-    private Surah surah;
-    // verse number
-    @Field
-    @NumericField
-    @Column(name = "verseId")
-    private Integer verseId;
+    @Column(name = "name")
+    private String name;
 
-    public Quran() {
+    public Surah() {
     }
 
-    public Quran(Integer id) {
+    public Surah(Integer id) {
         this.id = id;
     }
 
@@ -110,36 +83,12 @@ public class Quran implements Serializable {
         this.id = id;
     }
 
-    public Integer getAyahId() {
-        return ayahId;
+    public String getName() {
+        return name;
     }
 
-    public void setAyahId(Integer ayahId) {
-        this.ayahId = ayahId;
-    }
-
-    public String getAyahText() {
-        return ayahText;
-    }
-
-    public void setAyahText(String ayahText) {
-        this.ayahText = ayahText;
-    }
-
-    public Surah getSurah() {
-        return surah;
-    }
-
-    public void setSurah(Surah surah) {
-        this.surah = surah;
-    }
-
-    public Integer getVerseId() {
-        return verseId;
-    }
-
-    public void setVerseId(Integer verseId) {
-        this.verseId = verseId;
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override
@@ -152,18 +101,13 @@ public class Quran implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Quran)) {
+        if (!(object instanceof Surah)) {
             return false;
         }
-        Quran other = (Quran) object;
+        Surah other = (Surah) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
         return true;
-    }
-
-    @Override
-    public String toString() {
-        return "Quran{" + "id=" + id + ", ayahId=" + ayahId + ", ayahText=" + ayahText + ", surah=" + surah + ", verseId=" + verseId + '}';
     }
 }

@@ -1,13 +1,16 @@
 package com.bia.quran.service;
 
 import com.bia.quran.dao.QuranRepository;
+import com.bia.quran.dao.SurahRepository;
 import com.bia.quran.entity.Quran;
 import com.bia.quran.entity.ResultDto;
+import com.bia.quran.entity.Surah;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,18 +33,8 @@ public class QuranServiceImpl {
     protected static final String SURA_PREFIX_NO_REGEX_BETWEEN = SURA_PREFIX_NO_REGEX + "-" + SURA_PREFIX_NO_REGEX;
     @Autowired
     protected QuranRepository quranRepository;
-
-    /**
-     * reinitializes db
-     */
-    public void reinitDB() {
-        logger.info("reniting quran data...");
-        List<Quran> list = readData();
-        quranRepository.deleteAll();
-        logger.info("saving reinit data to database");
-        quranRepository.save(list);
-        logger.info("reiniting done...");
-    }
+    @Autowired
+    protected SurahRepository surahRepository;
 
     /*
      * Searches entire db for the term
@@ -75,11 +68,28 @@ public class QuranServiceImpl {
     }
 
     /**
+     * reinitializes db
+     */
+    public void reinitDB() {
+        logger.info("reniting quran data...");
+
+        logger.info(("loading Surah's"));
+        surahRepository.deleteAll();
+        List<Surah> surahs = readSuraData();
+        surahRepository.save(surahs);
+
+        logger.info("loading Ayah's");
+        quranRepository.deleteAll();
+        List<Quran> list = readAyahData();
+        quranRepository.save(list);
+    }
+
+    /**
      * Reads data from csv
      *
      * @return List<Quran>
      */
-    public List<Quran> readData() {
+    public List<Quran> readAyahData() {
         try {
             //use buffering, reading one line at a time
             //FileReader always assumes default encoding is OK!
@@ -100,7 +110,10 @@ public class QuranServiceImpl {
                     String[] tokens = line.split("\\|");
                     Quran quran = new Quran();
                     quran.setAyahId(ayahId++);
-                    quran.setSuraId(Integer.parseInt(tokens[0]));
+
+                    Surah surah = surahRepository.findOne(Integer.parseInt(tokens[0]));
+                    quran.setSurah(surah);
+
                     quran.setVerseId(Integer.parseInt(tokens[1]));
                     quran.setAyahText(tokens[2]);
                     list.add(quran);
@@ -112,5 +125,11 @@ public class QuranServiceImpl {
         } catch (IOException ex) {
             throw new RuntimeException(ex);
         }
+    }
+
+    public List<Surah> readSuraData() {
+        List<Surah> list = new LinkedList<Surah>();
+
+        return list;
     }
 }
