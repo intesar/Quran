@@ -29,7 +29,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class SynonymFileValidationTest {
     protected static final Logger logger = LoggerFactory.getLogger(SynonymFileValidationTest.class);
-    protected static final String SYNONYMS_FILE = "/data/synonyms.properties";
+    protected static final String SYNONYMS_FILE = "/data/ayah-synonyms.properties";
     @Autowired
     protected QuranServiceImpl quranServiceImpl;
     

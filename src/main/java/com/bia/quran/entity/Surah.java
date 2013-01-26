@@ -6,8 +6,16 @@ import javax.xml.bind.annotation.XmlRootElement;
 import org.apache.solr.analysis.*;
 import org.hibernate.annotations.Cache;
 import static org.hibernate.annotations.CacheConcurrencyStrategy.NONSTRICT_READ_WRITE;
+import org.hibernate.search.annotations.Analyzer;
+import org.hibernate.search.annotations.AnalyzerDef;
+import org.hibernate.search.annotations.AnalyzerDefs;
+import org.hibernate.search.annotations.Field;
+//import org.hibernate.search.annotations.Index;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.NumericField;
 import org.hibernate.search.annotations.Parameter;
-import org.hibernate.search.annotations.*;
+import org.hibernate.search.annotations.TokenFilterDef;
+import org.hibernate.search.annotations.TokenizerDef;
 
 /**
  *
@@ -20,7 +28,7 @@ import org.hibernate.search.annotations.*;
 @AnalyzerDefs({
     @AnalyzerDef(name = "surah-analyzer",
             tokenizer =
-            @TokenizerDef(factory = StandardTokenizerFactory.class),
+            @TokenizerDef(factory = KeywordTokenizerFactory.class),
             filters = {
         @TokenFilterDef(factory = StandardFilterFactory.class),
         @TokenFilterDef(factory = StopFilterFactory.class),
@@ -39,7 +47,8 @@ public class Surah implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Field
+    @NumericField
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
@@ -91,5 +100,10 @@ public class Surah implements Serializable {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return "Surah{" + "id=" + id + ", name=" + name + '}';
     }
 }
