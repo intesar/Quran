@@ -1,4 +1,3 @@
-
 package com.bia.quran.dao;
 
 import org.junit.After;
@@ -14,35 +13,36 @@ import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
- * @author mdshannan
+ * @author Intesar Mohammed <mdshannan@gmail.com>
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({
-    "/spring/*.xml" })
+    "/spring/*.xml"})
 @Transactional
 public class AyahRepositoryImplTest {
+
     @Autowired
     protected AyahRepository ayahRepository;
+
     public AyahRepositoryImplTest() {
     }
-    
+
     @BeforeClass
     public static void setUpClass() {
     }
-    
+
     @AfterClass
     public static void tearDownClass() {
     }
-    
+
     @Before
     public void setUp() {
     }
-    
+
     @After
     public void tearDown() {
     }
 
-    
     /**
      * Test of queryTopTerms method, of class QuranRepositoryImpl.
      */

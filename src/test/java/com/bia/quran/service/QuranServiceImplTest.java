@@ -1,4 +1,3 @@
-
 package com.bia.quran.service;
 
 import static org.junit.Assert.*;
@@ -9,7 +8,7 @@ import org.junit.Test;
  * @author Intesar Mohammed <mdshannan@gmail.com>
  */
 public class QuranServiceImplTest {
-    
+
     public QuranServiceImplTest() {
     }
 
@@ -28,8 +27,7 @@ public class QuranServiceImplTest {
     @org.junit.After
     public void tearDown() throws Exception {
     }
-    
-    
+
     /**
      * Test of readData method, of class QuranServiceImpl.
      */
@@ -42,10 +40,8 @@ public class QuranServiceImplTest {
         assertTrue("41".matches(QuranServiceImpl.SURA_NO_REGEX));
         assertTrue("100".matches(QuranServiceImpl.SURA_NO_REGEX));
         assertTrue("114".matches(QuranServiceImpl.SURA_NO_REGEX));
-        
+
         assertFalse("0".matches(QuranServiceImpl.SURA_NO_REGEX));
         assertFalse("115".matches(QuranServiceImpl.SURA_NO_REGEX));
-        
-        
     }
 }

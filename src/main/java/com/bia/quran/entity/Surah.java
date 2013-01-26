@@ -30,16 +30,16 @@ import org.hibernate.search.annotations.TokenizerDef;
             tokenizer =
             @TokenizerDef(factory = KeywordTokenizerFactory.class),
             filters = {
-        @TokenFilterDef(factory = StandardFilterFactory.class),
-        @TokenFilterDef(factory = StopFilterFactory.class),
+        //@TokenFilterDef(factory = StandardFilterFactory.class),
+        //@TokenFilterDef(factory = StopFilterFactory.class),
         @TokenFilterDef(factory = LowerCaseFilterFactory.class),
         @TokenFilterDef(factory = SynonymFilterFactory.class, params = {
             @Parameter(name = "ignoreCase", value = "true"),
             @Parameter(name = "expand", value = "true"),
             @Parameter(name = "synonyms", value = "data/surah-synonyms.properties")}),
-        @TokenFilterDef(factory = SnowballPorterFilterFactory.class, params = {
-            @Parameter(name = "language", value = "English")
-        })
+//        @TokenFilterDef(factory = SnowballPorterFilterFactory.class, params = {
+//            @Parameter(name = "language", value = "English")
+//        })
     })
 })
 @XmlRootElement
