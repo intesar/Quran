@@ -1,4 +1,4 @@
-package com.bia.quran.entity;
+package com.bia.quran.dao;
 
 /**
  *
