@@ -19,7 +19,7 @@ import org.hibernate.search.annotations.*;
 @Cache(usage = NONSTRICT_READ_WRITE)
 @Indexed
 @AnalyzerDefs({
-    @AnalyzerDef(name = "custom-analyzer",
+    @AnalyzerDef(name = "ayah-analyzer",
     tokenizer =
     @TokenizerDef(factory = StandardTokenizerFactory.class),
     filters = {
@@ -29,7 +29,7 @@ import org.hibernate.search.annotations.*;
         @TokenFilterDef(factory = SynonymFilterFactory.class, params = {
             @Parameter(name = "ignoreCase", value = "true"),
             @Parameter(name = "expand", value = "true"),
-            @Parameter(name = "synonyms", value = "data/synonyms.properties")}),
+            @Parameter(name = "synonyms", value = "data/ayah-synonyms.properties")}),
         @TokenFilterDef(factory = SnowballPorterFilterFactory.class, params = {
             @Parameter(name = "language", value = "English")
         })
@@ -51,7 +51,7 @@ public class Ayah implements Serializable {
     private Integer ayahId;
     // ayah
     @Field
-    @Analyzer(definition = "custom-analyzer")
+    @Analyzer(definition = "ayah-analyzer")
     @Lob
     @Column(name = "ayahText")
     private String ayahText;

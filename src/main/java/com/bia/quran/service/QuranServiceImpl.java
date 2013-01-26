@@ -72,14 +72,16 @@ public class QuranServiceImpl {
      */
     public void reinitDB() {
         logger.info("reniting quran data...");
-
-        logger.info(("loading Surah's"));
-        surahRepository.deleteAll();
+        
+        logger.info(("deleting all db data"));
+        ayahRepository.deleteAll();        
+        surahRepository.deleteAll();        
+        
+        logger.info("loading Surah's oob");
         List<Surah> surahs = readSuraData();
         surahRepository.save(surahs);
 
-        logger.info("loading Ayah's");
-        ayahRepository.deleteAll();
+        logger.info("loading Ayah's oob");        
         List<Ayah> list = readAyahData();
         ayahRepository.save(list);
     }
