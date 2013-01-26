@@ -21,9 +21,9 @@ public class QuranServiceImpl {
 
     protected static final Logger logger = LoggerFactory.getLogger(QuranServiceImpl.class);
     protected static final String SURA_NO_REGEX = "([1-9]|[1-9][0-9]|10[0-9]|11[0-4])";
-    protected static final String SURA_PREFIX_NO_REGEX = "suraId:" + SURA_NO_REGEX;
+    protected static final String SURA_NO_REGEX_PREFIX = "suraId:" + SURA_NO_REGEX;
     protected static final String SURA_NO_REGEX_BETWEEN = SURA_NO_REGEX + "-" + SURA_NO_REGEX;
-    protected static final String SURA_PREFIX_NO_REGEX_BETWEEN = SURA_PREFIX_NO_REGEX + "-" + SURA_PREFIX_NO_REGEX;
+    protected static final String SURA_PREFIX_NO_REGEX_BETWEEN = SURA_NO_REGEX_PREFIX + "-" + SURA_NO_REGEX_PREFIX;
     @Autowired
     protected AyahRepository ayahRepository;
     @Autowired
@@ -44,7 +44,7 @@ public class QuranServiceImpl {
         logger.info("Search term: " + term);
         List<Ayah> list;
         ResultDto dto = new ResultDto();
-        if (term.matches(SURA_NO_REGEX) || term.matches(SURA_PREFIX_NO_REGEX)) {
+        if (term.matches(SURA_NO_REGEX) || term.matches(SURA_NO_REGEX_PREFIX)) {
             String suraNo = term;
             String[] tokens = term.split(":");
             if (tokens.length > 1) {

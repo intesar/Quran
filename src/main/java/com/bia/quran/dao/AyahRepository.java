@@ -11,8 +11,4 @@ import org.springframework.data.repository.query.Param;
 public interface AyahRepository extends PagingAndSortingRepository<Ayah, Integer>, AyahRespositorySearch {
 
     List<Ayah> findByAyahText(@Param("ayahText") String ayahText);
-
-    List<Ayah> findBySurahId(Integer suraId);
-
-    List<Ayah> findBySurahIdBetween(Integer from, Integer to);
 }

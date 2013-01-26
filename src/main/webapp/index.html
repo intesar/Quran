@@ -22,7 +22,7 @@
                         jQuery.each(msg.ayahs, function() {
                             html += "<div>" 
                                 + " <p>" + this['ayahText'] +"</p>"
-                                + " <span>" + this['sura.id'] + "</span><span> verse: " + this['surahVerseId'] +"</span> "
+                                + " <span>" + this.surah.id + "</span> <span>" + this.surah.name + "</span><span> verse: " + this['surahVerseId'] +"</span> "
                                 + " </div>";
                         });
                         $("#result").html(html);

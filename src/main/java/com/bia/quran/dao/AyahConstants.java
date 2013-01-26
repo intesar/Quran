@@ -10,5 +10,6 @@ public interface AyahConstants {
     String AYAH_ID = "ayahId";
     String AYAH_TEXT = "ayahText";
     String SURAH_NAME = "surah.name";
+    String SURAH_ID = "surah.id";
     String VERSE_ID = "verseId";
 }

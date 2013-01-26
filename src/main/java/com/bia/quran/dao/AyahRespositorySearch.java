@@ -10,6 +10,10 @@ import java.util.List;
 public interface AyahRespositorySearch {
 
     List<Ayah> search(String term);
-    
+
+    List<Ayah> findBySurahId(Integer suraId);
+
+    List<Ayah> findBySurahIdBetween(Integer from, Integer to);
+
     List<Ayah> searchBySurahName(String term);
 }

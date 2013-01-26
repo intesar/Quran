@@ -13,10 +13,10 @@ import org.hibernate.search.annotations.Field;
 //import org.hibernate.search.annotations.Index;
 import org.apache.lucene.document.Field.Index;
 import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.NumericField;
 import org.hibernate.search.annotations.Parameter;
 import org.hibernate.search.annotations.TokenFilterDef;
 import org.hibernate.search.annotations.TokenizerDef;
-
 
 /**
  *
@@ -48,6 +48,8 @@ public class Surah implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @Field
+    @NumericField
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
