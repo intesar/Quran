@@ -43,6 +43,7 @@ public class QuranServiceImpl {
     public ResultDto search(String term) {
         logger.info("Search term: " + term);
         List<Ayah> list;
+        List<Surah> surahs = null;
         ResultDto dto = new ResultDto();
         if (term.matches(SURA_NO_REGEX) || term.matches(SURA_NO_REGEX_PREFIX)) {
             String suraNo = term;
@@ -56,8 +57,12 @@ public class QuranServiceImpl {
         } else if (term.matches(SURA_NO_REGEX_BETWEEN)) {
             String[] fromTo = term.split("-");
             list = ayahRepository.findBySurahIdBetween(Integer.parseInt(fromTo[0]), Integer.parseInt(fromTo[1]));
-//        } else if (!term.contains(" ")) {
-//            Surah surah = surahRepository.searchBySurahName(term);
+        } else if (!term.contains(" ")) {
+            surahs = surahRepository.searchBySurahName(term);
+
+            list = ayahRepository.search(term);
+            
+//            
 //            if ( surah != null ) {
 //                list = ayahRepository.findBySurahId(surah.getId());
 //            } else {
@@ -66,6 +71,7 @@ public class QuranServiceImpl {
         } else {
             list = ayahRepository.search(term);
         }
+        dto.setSurahs(surahs);
         dto.setAyahs(list);
         dto.setAyahHits(list == null ? 0 : list.size());
         return dto;

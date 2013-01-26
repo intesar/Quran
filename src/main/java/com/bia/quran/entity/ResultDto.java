@@ -13,6 +13,7 @@ public class ResultDto implements Serializable {
 
     private int ayahHits;
     private List<Ayah> ayahs;
+    private List<Surah> surahs;
 
     public ResultDto() {
     }
@@ -36,5 +37,13 @@ public class ResultDto implements Serializable {
 
     public void setAyahs(List<Ayah> ayahs) {
         this.ayahs = ayahs;
+    }
+
+    public void setSurahs(List<Surah> surahs) {
+        this.surahs = surahs;
+    }
+
+    public List<Surah> getSurahs() {
+        return surahs;
     }
 }

@@ -1,7 +1,7 @@
 package com.bia.quran.dao;
 
-import com.bia.quran.entity.Ayah;
 import com.bia.quran.entity.Surah;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceUnit;
@@ -22,7 +22,7 @@ public class SurahRepositoryImpl implements SurahRespositorySearch {
     private EntityManagerFactory emf;
 
     @Override
-    public Surah searchBySurahName(String term) {
+    public List<Surah> searchBySurahName(String term) {
         EntityManager em = emf.createEntityManager();
 
         FullTextEntityManager fullTextEntityManager =
@@ -41,7 +41,9 @@ public class SurahRepositoryImpl implements SurahRespositorySearch {
         FullTextQuery fullTextQuery =
                 fullTextEntityManager.createFullTextQuery(luceneQuery);
 
-        return (Surah) fullTextQuery.getSingleResult();
+        List<Surah> list = fullTextQuery.getResultList();
+        
+        return list;
 
     }
 }

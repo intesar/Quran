@@ -1,6 +1,7 @@
 package com.bia.quran.dao;
 
 import com.bia.quran.entity.Surah;
+import java.util.List;
 
 /**
  *
@@ -8,5 +9,5 @@ import com.bia.quran.entity.Surah;
  */
 public interface SurahRespositorySearch {
 
-    Surah searchBySurahName(String name);
+    List<Surah> searchBySurahName(String name);
 }
