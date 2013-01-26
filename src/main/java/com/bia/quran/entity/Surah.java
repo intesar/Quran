@@ -39,7 +39,6 @@ public class Surah implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
@@ -91,5 +90,10 @@ public class Surah implements Serializable {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return "Surah{" + "id=" + id + ", name=" + name + '}';
     }
 }

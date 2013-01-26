@@ -6,7 +6,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author mdshannan
+ * @author Intesar Mohammed <mdshannan@gmail.com>
  */
 @XmlRootElement
 public class ResultDto implements Serializable {

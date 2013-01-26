@@ -20,9 +20,9 @@ import org.hibernate.search.annotations.*;
 @Indexed
 @AnalyzerDefs({
     @AnalyzerDef(name = "ayah-analyzer",
-    tokenizer =
-    @TokenizerDef(factory = StandardTokenizerFactory.class),
-    filters = {
+            tokenizer =
+            @TokenizerDef(factory = StandardTokenizerFactory.class),
+            filters = {
         @TokenFilterDef(factory = StandardFilterFactory.class),
         @TokenFilterDef(factory = StopFilterFactory.class),
         @TokenFilterDef(factory = LowerCaseFilterFactory.class),
@@ -40,15 +40,9 @@ public class Ayah implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    // ayah number
-    @Field
-    @NumericField
-    @Column(name = "ayahId")
-    private Integer ayahId;
     // ayah
     @Field
     @Analyzer(definition = "ayah-analyzer")
@@ -62,8 +56,8 @@ public class Ayah implements Serializable {
     // verse number
     @Field
     @NumericField
-    @Column(name = "verseId")
-    private Integer verseId;
+    @Column(name = "surahVerseId")
+    private Integer surahVerseId;
 
     public Ayah() {
     }
@@ -78,14 +72,6 @@ public class Ayah implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public Integer getAyahId() {
-        return ayahId;
-    }
-
-    public void setAyahId(Integer ayahId) {
-        this.ayahId = ayahId;
     }
 
     public String getAyahText() {
@@ -104,12 +90,12 @@ public class Ayah implements Serializable {
         this.surah = surah;
     }
 
-    public Integer getVerseId() {
-        return verseId;
+    public Integer getSurahVerseId() {
+        return surahVerseId;
     }
 
-    public void setVerseId(Integer verseId) {
-        this.verseId = verseId;
+    public void setSurahVerseId(Integer surahVerseId) {
+        this.surahVerseId = surahVerseId;
     }
 
     @Override
@@ -134,6 +120,6 @@ public class Ayah implements Serializable {
 
     @Override
     public String toString() {
-        return "Ayah{" + "id=" + id + ", ayahId=" + ayahId + ", ayahText=" + ayahText + ", surah=" + surah + ", verseId=" + verseId + '}';
+        return "Ayah{" + "id=" + id + ", ayahText=" + ayahText + ", surah=" + surah + ", surahVerseId=" + surahVerseId + '}';
     }
 }
