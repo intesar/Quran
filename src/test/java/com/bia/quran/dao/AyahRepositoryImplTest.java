@@ -25,10 +25,10 @@ import org.springframework.transaction.annotation.Transactional;
 @ContextConfiguration({
     "/spring/*.xml" })
 @Transactional
-public class QuranRepositoryImplTest {
+public class AyahRepositoryImplTest {
     @Autowired
-    protected QuranRepository quranRepository;
-    public QuranRepositoryImplTest() {
+    protected AyahRepository ayahRepository;
+    public AyahRepositoryImplTest() {
     }
     
     @BeforeClass

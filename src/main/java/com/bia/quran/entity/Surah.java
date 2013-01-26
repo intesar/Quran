@@ -36,7 +36,7 @@ import org.hibernate.search.annotations.TokenizerDef;
 @Cache(usage = NONSTRICT_READ_WRITE)
 @Indexed
 @AnalyzerDefs({
-    @AnalyzerDef(name = "custom-analyzer",
+    @AnalyzerDef(name = "surah-analyzer",
             tokenizer =
             @TokenizerDef(factory = StandardTokenizerFactory.class),
             filters = {
@@ -63,7 +63,7 @@ public class Surah implements Serializable {
     private Integer id;
     // name
     @Field
-    @Analyzer(definition = "custom-analyzer")
+    @Analyzer(definition = "surah-analyzer")
     @Lob
     @Column(name = "name")
     private String name;

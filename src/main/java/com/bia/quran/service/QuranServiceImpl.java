@@ -1,8 +1,8 @@
 package com.bia.quran.service;
 
-import com.bia.quran.dao.QuranRepository;
+import com.bia.quran.dao.AyahRepository;
 import com.bia.quran.dao.SurahRepository;
-import com.bia.quran.entity.Quran;
+import com.bia.quran.entity.Ayah;
 import com.bia.quran.entity.ResultDto;
 import com.bia.quran.entity.Surah;
 import java.io.BufferedReader;
@@ -18,7 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
- * Reads Quran data from csv
+ * Reads Ayah data from csv
  *
  * @author Intesar Mohammed <mdshannan@gmail.com>
  */
@@ -27,25 +27,25 @@ public class QuranServiceImpl {
 
     protected static final Logger logger = LoggerFactory.getLogger(QuranServiceImpl.class);
     protected static final String RAW_DATA_FILE = "/data/English-Yusuf-Ali-59 (2).csv";
+    protected static final String SURA_FILE = "/data/Sura-Numbers.csv";
     protected static final String SURA_NO_REGEX = "([1-9]|[1-9][0-9]|10[0-9]|11[0-4])";
     protected static final String SURA_PREFIX_NO_REGEX = "suraId:" + SURA_NO_REGEX;
     protected static final String SURA_NO_REGEX_BETWEEN = SURA_NO_REGEX + "-" + SURA_NO_REGEX;
     protected static final String SURA_PREFIX_NO_REGEX_BETWEEN = SURA_PREFIX_NO_REGEX + "-" + SURA_PREFIX_NO_REGEX;
+    protected static final String PIPE = "\\|";
     @Autowired
-    protected QuranRepository quranRepository;
+    protected AyahRepository ayahRepository;
     @Autowired
     protected SurahRepository surahRepository;
 
     /*
-     * Searches entire db for the term
-     * Search by sura number (e.g 1, 23, 114, suraID:1, suraID:34. valid suraID values 1-114)
-     * Search by sura number range (e.g 1-4, 100-114)
-     * Search by Sura name   
-     * Search by term
+     * Searches entire db for the term Search by sura number (e.g 1, 23, 114,
+     * suraID:1, suraID:34. valid suraID values 1-114) Search by sura number
+     * range (e.g 1-4, 100-114) Search by Sura name Search by term
      */
     public ResultDto search(String term) {
         logger.info("Search term: " + term);
-        List<Quran> list;
+        List<Ayah> list;
         ResultDto dto = new ResultDto();
         if (term.matches(SURA_NO_REGEX) || term.matches(SURA_PREFIX_NO_REGEX)) {
             String suraNo = term;
@@ -55,12 +55,12 @@ public class QuranServiceImpl {
             }
             Integer suraId = Integer.parseInt(suraNo);
             logger.info("suraId : " + suraId);
-            list = quranRepository.findBySuraId(suraId);
+            list = ayahRepository.findBySurahId(suraId);
         } else if (term.matches(SURA_NO_REGEX_BETWEEN)) {
             String[] fromTo = term.split("-");
-            list = quranRepository.findBySuraIdBetween(Integer.parseInt(fromTo[0]), Integer.parseInt(fromTo[1]));
+            list = ayahRepository.findBySurahIdBetween(Integer.parseInt(fromTo[0]), Integer.parseInt(fromTo[1]));
         } else {
-            list = quranRepository.search(term);
+            list = ayahRepository.search(term);
         }
         dto.setAyahs(list);
         dto.setAyahHits(list == null ? 0 : list.size());
@@ -79,9 +79,9 @@ public class QuranServiceImpl {
         surahRepository.save(surahs);
 
         logger.info("loading Ayah's");
-        quranRepository.deleteAll();
-        List<Quran> list = readAyahData();
-        quranRepository.save(list);
+        ayahRepository.deleteAll();
+        List<Ayah> list = readAyahData();
+        ayahRepository.save(list);
     }
 
     /**
@@ -89,7 +89,7 @@ public class QuranServiceImpl {
      *
      * @return List<Quran>
      */
-    public List<Quran> readAyahData() {
+    public List<Ayah> readAyahData() {
         try {
             //use buffering, reading one line at a time
             //FileReader always assumes default encoding is OK!
@@ -99,16 +99,16 @@ public class QuranServiceImpl {
             try {
                 String line; //not declared within while loop
                 /*
-                 * readLine is a bit quirky :
-                 * it returns the content of a line MINUS the newline.
-                 * it returns null only for the END of the stream.
-                 * it returns an empty String if two newlines appear in a row.
+                 * readLine is a bit quirky : it returns the content of a line
+                 * MINUS the newline. it returns null only for the END of the
+                 * stream. it returns an empty String if two newlines appear in
+                 * a row.
                  */
                 int ayahId = 1;
-                List<Quran> list = new ArrayList<Quran>();
+                List<Ayah> list = new ArrayList<Ayah>();
                 while (((line = x.readLine()) != null)) {
-                    String[] tokens = line.split("\\|");
-                    Quran quran = new Quran();
+                    String[] tokens = line.split(PIPE);
+                    Ayah quran = new Ayah();
                     quran.setAyahId(ayahId++);
 
                     Surah surah = surahRepository.findOne(Integer.parseInt(tokens[0]));
@@ -128,8 +128,36 @@ public class QuranServiceImpl {
     }
 
     public List<Surah> readSuraData() {
-        List<Surah> list = new LinkedList<Surah>();
+        try {
+            logger.info("reading sura from " + SURA_FILE);
+            InputStream input = QuranServiceImpl.class.getResourceAsStream(SURA_FILE);
+            BufferedReader x = new BufferedReader(new InputStreamReader(input));
+            try {
+                String line;
+                int suraId = 1;
+                List<Surah> list = new LinkedList<Surah>();
+                while(((line = x.readLine()) != null)){
+                    String[] tokens = line.split(PIPE);
+                    Surah surah = new Surah();
+                    surah.setId(Integer.parseInt(tokens[0]));
+                    surah.setName(tokens[1]);
+                    list.add(surah);
+                }
+                return list;
+            } finally {
+                input.close();
+            }
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
+        }
 
-        return list;
+
     }
+    //TODO
+//    xRename Quran to Ayah
+//    xQuranRepository
+//    xQuranRepositoryImpl
+//    xQuranREpositorySear
+//    xQuran
+//    xQuranConstants
 }

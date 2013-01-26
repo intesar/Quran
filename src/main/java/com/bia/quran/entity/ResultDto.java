@@ -12,12 +12,12 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class ResultDto implements Serializable {
 
     private int ayahHits;
-    private List<Quran> ayahs;
+    private List<Ayah> ayahs;
 
     public ResultDto() {
     }
 
-    public ResultDto(int ayahHits, List<Quran> ayahs) {
+    public ResultDto(int ayahHits, List<Ayah> ayahs) {
         this.ayahHits = ayahHits;
         this.ayahs = ayahs;
     }
@@ -30,11 +30,11 @@ public class ResultDto implements Serializable {
         this.ayahHits = ayahHits;
     }
 
-    public List<Quran> getAyahs() {
+    public List<Ayah> getAyahs() {
         return ayahs;
     }
 
-    public void setAyahs(List<Quran> ayahs) {
+    public void setAyahs(List<Ayah> ayahs) {
         this.ayahs = ayahs;
     }
 }

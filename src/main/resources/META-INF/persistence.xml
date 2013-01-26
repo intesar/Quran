@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<persistence xmlns="http://java.sun.com/xml/ns/persistence" version="2.0">
+<persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence">
   <persistence-unit name="quran-pu">
-    <class>com.bia.quran.entity.Quran</class>
+    <class>com.bia.quran.entity.Surah</class>
+    <class>com.bia.quran.entity.Ayah</class>
     <shared-cache-mode>ENABLE_SELECTIVE</shared-cache-mode>
     <!--
     <properties>
