@@ -24,7 +24,7 @@ public class AyahRepositoryImpl implements AyahRespositorySearch {
 
     @Override
     public List<Ayah> search(String term) {
-        
+
         EntityManager em = emf.createEntityManager();
 
         FullTextEntityManager fullTextEntityManager =
@@ -43,10 +43,31 @@ public class AyahRepositoryImpl implements AyahRespositorySearch {
         FullTextQuery fullTextQuery =
                 fullTextEntityManager.createFullTextQuery(luceneQuery);
 
-//        org.apache.lucene.search.Sort sort = new Sort(
-//                new SortField(AyahConstants.AYAH_ID, SortField.INT));
-        
-//        fullTextQuery.setSort(sort);
+        List<Ayah> result = fullTextQuery.getResultList();
+
+        return result;
+    }
+
+    @Override
+    public List<Ayah> searchBySurahName(String term) {
+
+        EntityManager em = emf.createEntityManager();
+
+        FullTextEntityManager fullTextEntityManager =
+                org.hibernate.search.jpa.Search.getFullTextEntityManager(em);
+
+
+        final QueryBuilder b = fullTextEntityManager.getSearchFactory()
+                .buildQueryBuilder().forEntity(Ayah.class).get();
+
+        org.apache.lucene.search.Query luceneQuery =
+                b.keyword()
+                .onField(AyahConstants.SURAH_NAME).boostedTo(3)
+                .matching(term)
+                .createQuery();
+
+        FullTextQuery fullTextQuery =
+                fullTextEntityManager.createFullTextQuery(luceneQuery);
 
         List<Ayah> result = fullTextQuery.getResultList();
 

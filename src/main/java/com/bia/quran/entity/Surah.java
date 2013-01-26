@@ -6,8 +6,17 @@ import javax.xml.bind.annotation.XmlRootElement;
 import org.apache.solr.analysis.*;
 import org.hibernate.annotations.Cache;
 import static org.hibernate.annotations.CacheConcurrencyStrategy.NONSTRICT_READ_WRITE;
+import org.hibernate.search.annotations.Analyzer;
+import org.hibernate.search.annotations.AnalyzerDef;
+import org.hibernate.search.annotations.AnalyzerDefs;
+import org.hibernate.search.annotations.Field;
+//import org.hibernate.search.annotations.Index;
+import org.apache.lucene.document.Field.Index;
+import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.Parameter;
-import org.hibernate.search.annotations.*;
+import org.hibernate.search.annotations.TokenFilterDef;
+import org.hibernate.search.annotations.TokenizerDef;
+
 
 /**
  *

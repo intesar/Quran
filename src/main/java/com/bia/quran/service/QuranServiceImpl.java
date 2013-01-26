@@ -32,9 +32,13 @@ public class QuranServiceImpl {
     protected OOBDataReader oOBDataReader;
 
     /*
-     * Searches entire db for the term Search by sura number (e.g 1, 23, 114,
+     * <p>Searches entire db for the term Search by sura number (e.g 1, 23, 114,
      * suraID:1, suraID:34. valid suraID values 1-114) Search by sura number
-     * range (e.g 1-4, 100-114) Search by Sura name Search by term
+     * range (e.g 1-4, 100-114) </p>
+     * 
+     * <p> Search by Sura name </p>
+     * 
+     * <p> Search by any sentence or keywords in the Ayah's </p>
      */
     public ResultDto search(String term) {
         logger.info("Search term: " + term);
@@ -52,6 +56,13 @@ public class QuranServiceImpl {
         } else if (term.matches(SURA_NO_REGEX_BETWEEN)) {
             String[] fromTo = term.split("-");
             list = ayahRepository.findBySurahIdBetween(Integer.parseInt(fromTo[0]), Integer.parseInt(fromTo[1]));
+//        } else if (!term.contains(" ")) {
+//            Surah surah = surahRepository.searchBySurahName(term);
+//            if ( surah != null ) {
+//                list = ayahRepository.findBySurahId(surah.getId());
+//            } else {
+//                list = ayahRepository.search(term);
+//            }
         } else {
             list = ayahRepository.search(term);
         }
