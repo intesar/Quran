@@ -11,7 +11,6 @@ import org.hibernate.search.annotations.AnalyzerDef;
 import org.hibernate.search.annotations.AnalyzerDefs;
 import org.hibernate.search.annotations.Field;
 //import org.hibernate.search.annotations.Index;
-import org.apache.lucene.document.Field.Index;
 import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.NumericField;
 import org.hibernate.search.annotations.Parameter;
@@ -29,7 +28,7 @@ import org.hibernate.search.annotations.TokenizerDef;
 @AnalyzerDefs({
     @AnalyzerDef(name = "surah-analyzer",
             tokenizer =
-            @TokenizerDef(factory = StandardTokenizerFactory.class),
+            @TokenizerDef(factory = KeywordTokenizerFactory.class),
             filters = {
         @TokenFilterDef(factory = StandardFilterFactory.class),
         @TokenFilterDef(factory = StopFilterFactory.class),

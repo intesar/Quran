@@ -12,6 +12,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class ResultDto implements Serializable {
 
     private int ayahHits;
+    private int surahHits;
     private List<Ayah> ayahs;
     private List<Surah> surahs;
 
@@ -45,5 +46,13 @@ public class ResultDto implements Serializable {
 
     public List<Surah> getSurahs() {
         return surahs;
+    }
+
+    public int getSurahHits() {
+        return surahHits;
+    }
+
+    public void setSurahHits(int surahHits) {
+        this.surahHits = surahHits;
     }
 }

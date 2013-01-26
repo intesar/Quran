@@ -5,7 +5,10 @@ import com.bia.quran.dao.SurahRepository;
 import com.bia.quran.entity.Ayah;
 import com.bia.quran.entity.ResultDto;
 import com.bia.quran.entity.Surah;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,9 +62,13 @@ public class QuranServiceImpl {
             list = ayahRepository.findBySurahIdBetween(Integer.parseInt(fromTo[0]), Integer.parseInt(fromTo[1]));
         } else if (!term.contains(" ")) {
             surahs = surahRepository.searchBySurahName(term);
+            if (surahs != null && surahs.size() == 1) {
+                list = ayahRepository.findBySurahId(surahs.get(0).getId());
 
-            list = ayahRepository.search(term);
-            
+            } else {
+                list = ayahRepository.search(term);
+            }
+
 //            
 //            if ( surah != null ) {
 //                list = ayahRepository.findBySurahId(surah.getId());
@@ -71,8 +78,9 @@ public class QuranServiceImpl {
         } else {
             list = ayahRepository.search(term);
         }
-        dto.setSurahs(surahs);
-        dto.setAyahs(list);
+        dto.setSurahs(surahs == null ? new ArrayList<Surah>() : surahs);
+        dto.setSurahHits(surahs == null ? 0 : surahs.size());
+        dto.setAyahs(list == null ? new ArrayList<Ayah>() : list);
         dto.setAyahHits(list == null ? 0 : list.size());
         return dto;
     }
