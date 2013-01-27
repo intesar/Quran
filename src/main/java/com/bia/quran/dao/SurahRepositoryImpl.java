@@ -35,7 +35,7 @@ public class SurahRepositoryImpl implements SurahRespositorySearch {
 
         org.apache.lucene.search.Query luceneQuery =
                 b.keyword()
-                .onField(SurahConstants.NAME).boostedTo(3)
+                .onField(SurahConstants.NAME)
                 .matching(term)
                 .createQuery();
 
