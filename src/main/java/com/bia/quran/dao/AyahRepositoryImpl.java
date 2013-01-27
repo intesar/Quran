@@ -5,6 +5,8 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceUnit;
+import org.apache.lucene.search.Sort;
+import org.apache.lucene.search.SortField;
 import org.hibernate.search.jpa.FullTextEntityManager;
 import org.hibernate.search.jpa.FullTextQuery;
 import org.hibernate.search.query.dsl.QueryBuilder;
@@ -75,55 +77,63 @@ public class AyahRepositoryImpl implements AyahRespositorySearch {
         return result;
     }
 
-    @Override
-    public List<Ayah> findBySurahId(Integer suraId) {
-        logger.info("findBySurahId = {}", suraId);
-        EntityManager em = emf.createEntityManager();
-
-        FullTextEntityManager fullTextEntityManager =
-                org.hibernate.search.jpa.Search.getFullTextEntityManager(em);
-
-
-        final QueryBuilder b = fullTextEntityManager.getSearchFactory()
-                .buildQueryBuilder().forEntity(Ayah.class).get();
-
-        org.apache.lucene.search.Query luceneQuery =
-                b.keyword()
-                .onField(AyahConstants.SURAH_ID).boostedTo(3)
-                .matching(suraId)
-                .createQuery();
-
-        FullTextQuery fullTextQuery =
-                fullTextEntityManager.createFullTextQuery(luceneQuery);
-
-        List<Ayah> result = fullTextQuery.getResultList();
-
-        return result;
-    }
-
-    @Override
-    public List<Ayah> findBySurahIdBetween(Integer from, Integer to) {
-        logger.info("findBySurahIdBetween = {} - {}", from, to);
-        EntityManager em = emf.createEntityManager();
-
-        FullTextEntityManager fullTextEntityManager =
-                org.hibernate.search.jpa.Search.getFullTextEntityManager(em);
-
-
-        final QueryBuilder b = fullTextEntityManager.getSearchFactory()
-                .buildQueryBuilder().forEntity(Ayah.class).get();
-
-        org.apache.lucene.search.Query luceneQuery =
-                b.range()
-                .onField(AyahConstants.SURAH_ID)
-                .from(from).to(to)
-                .createQuery();
-
-        FullTextQuery fullTextQuery =
-                fullTextEntityManager.createFullTextQuery(luceneQuery);
-
-        List<Ayah> result = fullTextQuery.getResultList();
-
-        return result;
-    }
+//    @Override
+//    public List<Ayah> findBySurahId(Integer suraId) {
+//        logger.info("findBySurahId = {}", suraId);
+//        EntityManager em = emf.createEntityManager();
+//
+//        FullTextEntityManager fullTextEntityManager =
+//                org.hibernate.search.jpa.Search.getFullTextEntityManager(em);
+//
+//
+//        final QueryBuilder b = fullTextEntityManager.getSearchFactory()
+//                .buildQueryBuilder().forEntity(Ayah.class).get();
+//
+//        org.apache.lucene.search.Query luceneQuery =
+//                b.keyword()
+//                .onField(AyahConstants.SURAH_ID).boostedTo(3)
+//                .matching(suraId)
+//                .createQuery();
+//
+//        FullTextQuery fullTextQuery =
+//                fullTextEntityManager.createFullTextQuery(luceneQuery);
+//
+//        Sort sort = new Sort(
+//                new SortField(AyahConstants.AYAH_ID, SortField.INT));
+//        fullTextQuery.setSort(sort);
+//
+//        List<Ayah> result = fullTextQuery.getResultList();
+//
+//        return result;
+//    }
+//
+//    @Override
+//    public List<Ayah> findBySurahIdBetween(Integer from, Integer to) {
+//        logger.info("findBySurahIdBetween = {} - {}", from, to);
+//        EntityManager em = emf.createEntityManager();
+//
+//        FullTextEntityManager fullTextEntityManager =
+//                org.hibernate.search.jpa.Search.getFullTextEntityManager(em);
+//
+//
+//        final QueryBuilder b = fullTextEntityManager.getSearchFactory()
+//                .buildQueryBuilder().forEntity(Ayah.class).get();
+//
+//        org.apache.lucene.search.Query luceneQuery =
+//                b.range()
+//                .onField(AyahConstants.SURAH_ID)
+//                .from(from).to(to)
+//                .createQuery();
+//
+//        FullTextQuery fullTextQuery =
+//                fullTextEntityManager.createFullTextQuery(luceneQuery);
+//
+//        org.apache.lucene.search.Sort sort = new org.apache.lucene.search.Sort(
+//                new SortField(AyahConstants.AYAH_ID, SortField.INT));
+//        fullTextQuery.setSort(sort);
+//
+//        List<Ayah> result = fullTextQuery.getResultList();
+//
+//        return result;
+//    }
 }

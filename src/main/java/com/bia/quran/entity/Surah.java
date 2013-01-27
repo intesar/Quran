@@ -28,7 +28,7 @@ import org.hibernate.search.annotations.TokenizerDef;
 @AnalyzerDefs({
     @AnalyzerDef(name = "surah-analyzer",
             tokenizer =
-            @TokenizerDef(factory = KeywordTokenizerFactory.class),
+            @TokenizerDef(factory = StandardTokenizerFactory.class),
             filters = {
         @TokenFilterDef(factory = StandardFilterFactory.class),
         @TokenFilterDef(factory = StopFilterFactory.class),
@@ -55,7 +55,7 @@ public class Surah implements Serializable {
     // name
     @Field
     @Analyzer(definition = "surah-analyzer")
-    @Lob
+    //@Lob
     @Column(name = "name")
     private String name;
 

@@ -23,6 +23,7 @@ public class SurahRepositoryImpl implements SurahRespositorySearch {
 
     @Override
     public List<Surah> searchBySurahName(String term) {
+        logger.info("searchBySurahName = {}", term);
         EntityManager em = emf.createEntityManager();
 
         FullTextEntityManager fullTextEntityManager =
@@ -34,7 +35,7 @@ public class SurahRepositoryImpl implements SurahRespositorySearch {
 
         org.apache.lucene.search.Query luceneQuery =
                 b.keyword()
-                .onField(SurahConstants.NAME).boostedTo(3)
+                .onField(SurahConstants.NAME)
                 .matching(term)
                 .createQuery();
 
@@ -42,6 +43,8 @@ public class SurahRepositoryImpl implements SurahRespositorySearch {
                 fullTextEntityManager.createFullTextQuery(luceneQuery);
 
         List<Surah> list = fullTextQuery.getResultList();
+        
+        logger.info("searchBySurahName result = {}", list);
         
         return list;
 

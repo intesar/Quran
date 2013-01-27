@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 
 /**
  *
- * @author mdshannan
+ * @author Intesar Mohammed <mdshannan@gmail.com>
  */
 @Component
 public class OOBDataReader {
