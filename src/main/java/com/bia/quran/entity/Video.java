@@ -13,13 +13,16 @@ public class Video implements Serializable {
     private String title;
     private String description;
     private String link;
+    private String type;
 
-    public Video(){}
-    
-    public Video(String title, String description, String link) {
+    public Video() {
+    }
+
+    public Video(String title, String description, String link, String type) {
         this.title = title;
         this.description = description;
         this.link = link;
+        this.type = type;
     }
 
     public String getTitle() {
@@ -44,5 +47,13 @@ public class Video implements Serializable {
 
     public void setLink(String link) {
         this.link = link;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

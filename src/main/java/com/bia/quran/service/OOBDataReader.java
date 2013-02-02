@@ -52,7 +52,7 @@ public class OOBDataReader {
                     // get link values 
                     // llok at readAyahData()
 
-                    Video video = new Video("test", "test", "test");
+                    Video video = new Video("test", "test", "test", "youtube");
                     surah.getVideos().add(video);
                     list.add(surah);
                 }
