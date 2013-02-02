@@ -3,6 +3,7 @@ package com.bia.quran.service;
 import com.bia.quran.dao.SurahRepository;
 import com.bia.quran.entity.Ayah;
 import com.bia.quran.entity.Surah;
+import com.bia.quran.entity.Video;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -47,6 +48,12 @@ public class OOBDataReader {
                     Surah surah = new Surah();
                     surah.setId(Integer.parseInt(tokens[0]));
                     surah.setName(tokens[1]);
+
+                    // get link values 
+                    // llok at readAyahData()
+
+                    Video video = new Video("test", "test", "test");
+                    surah.getVideos().add(video);
                     list.add(surah);
                 }
                 return list;

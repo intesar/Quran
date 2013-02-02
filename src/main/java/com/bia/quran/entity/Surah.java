@@ -1,6 +1,8 @@
 package com.bia.quran.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 import org.apache.solr.analysis.*;
@@ -58,6 +60,8 @@ public class Surah implements Serializable {
     //@Lob
     @Column(name = "name")
     private String name;
+    @ElementCollection(fetch = FetchType.EAGER)
+    private List<Video> videos = new ArrayList<Video>();
 
     public Surah() {
     }
@@ -80,6 +84,14 @@ public class Surah implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public List<Video> getVideos() {
+        return videos;
+    }
+
+    public void setVideos(List<Video> videos) {
+        this.videos = videos;
     }
 
     @Override
