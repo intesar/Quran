@@ -8,9 +8,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +17,7 @@ import org.springframework.stereotype.Component;
 /**
  *
  * @author Intesar Mohammed <mdshannan@gmail.com>
+ * @author Atef A. Ahmed
  */
 @Component
 public class OOBDataReader {
@@ -26,6 +25,7 @@ public class OOBDataReader {
     protected static final Logger logger = LoggerFactory.getLogger(OOBDataReader.class);
     protected static final String RAW_DATA_FILE = "/data/English-Yusuf-Ali-59 (2).csv";
     protected static final String SURA_FILE = "/data/Sura-Numbers.csv";
+    protected static final String MISHARI_YOUTUBE = "/data/surah_mishari_youtube.csv";
     protected static final String PIPE = "\\|";
     @Autowired
     protected SurahRepository surahRepository;
@@ -43,18 +43,20 @@ public class OOBDataReader {
             try {
                 String line;
                 List<Surah> list = new LinkedList<Surah>();
+                int linkUrl = 1;
                 while (((line = x.readLine()) != null)) {
                     String[] tokens = line.split(PIPE);
                     Surah surah = new Surah();
                     surah.setId(Integer.parseInt(tokens[0]));
-                    surah.setName(tokens[1]);
+                    surah.setName(tokens[1]);                    
 
-                    // get link values 
-                    // llok at readAyahData()
+                    Map<Integer,String> link = readLinks();
+                    String links = link.get(linkUrl).toString();                    
 
-                    Video video = new Video("test", "test", "test", "youtube");
+                    Video video = new Video("test", "test", links, "youtube");
                     surah.getVideos().add(video);
                     list.add(surah);
+                    linkUrl++;
                 }
                 return list;
             } finally {
@@ -70,6 +72,32 @@ public class OOBDataReader {
      *
      * @return List<Quran>
      */
+
+    public Map<Integer,String> readLinks() {
+        try {            
+            InputStream input = QuranServiceImpl.class.getResourceAsStream(MISHARI_YOUTUBE);            
+            BufferedReader x = new BufferedReader(new InputStreamReader(input));
+            
+            try {                
+                String line;
+                Map<Integer, String> map = new HashMap<Integer, String>();
+
+                while ((line = x.readLine()) != null) {
+                    String[] tokens = line.split(PIPE);
+                                        
+                    Integer surahId = Integer.parseInt(tokens[0]);
+                  
+                    map.put(surahId, tokens[1]);
+                }                
+                return map;
+            } finally {
+                input.close();
+            }
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+
     public List<Ayah> readAyahData() {
         try {
             //use buffering, reading one line at a time
